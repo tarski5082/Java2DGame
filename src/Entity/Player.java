@@ -13,16 +13,28 @@ public class Player extends Entity{
 	GamePanel gp;
 	KeyHandler keyH;
 	
+	public int screenX=0;
+	public int screenY=0;
+	
+	public int playerX=0;	
+	public int playerY=-8;
+	
+	
+	public int speed=1;
+	boolean isMoving=false;
+	
 	public Player(GamePanel gp,KeyHandler keyH) {
 		this.gp=gp;
 		this.keyH=keyH;
 		setDefault();
+		screenX =(gp.worldWidth-gp.tileSize)/2;
+		screenY=(gp.worldHeight-gp.tileSize)/2;
 	}
 	
 	public void setDefault() {
-		x =100;
-		y=100;
-		speed=4;
+		worldX =gp.tileSize*24;
+		worldY=gp.tileSize*20;
+		speed=1;
 		getPlayerImage();
 		direction="down";
 	}
@@ -49,42 +61,33 @@ public class Player extends Entity{
 	
 	public void update() {
 		
-		
-		if(keyH.upPressed) {
-			y-=speed;
+		if(keyH.getDirection()==keyH.UP){
 			direction ="up";
+			
+			playerY-=speed;
 		}
 		
-		if(keyH.downPressed) {
-			y+=speed;
+		if(keyH.getDirection()==keyH.DOWN) {
 			direction="down";
+			
+			playerY+=speed;
 		}
 		
-		if(keyH.leftPressed) {
-			x-=speed;
+		if(keyH.getDirection()==keyH.LEFT) {
 			direction="left";
+			
+			playerX-=speed;
 		}
 		
-		if(keyH.rightPressed) {
-			x+=speed;
+		if(keyH.getDirection()==keyH.RIGHT) {
 			direction="right";
+			playerX+=speed;
+			
 		}
 		
-		if(y<0) {
-			y=0;
-		}
-		if(y+gp.tileSize>=gp.screenHeight){
-			y=gp.screenHeight-gp.tileSize;
-		}
 		
-		if(x<0) {
-			x=0;
-		}
-		if(x+gp.tileSize>gp.screenWidth){
-			x=gp.screenWidth-gp.tileSize;
-		}
 		spriteCounter++;
-		if(spriteCounter>10) {
+		if(spriteCounter>20) {
 			switch(spriteNum) {
 				case 1:
 					spriteNum=2;
@@ -96,25 +99,17 @@ public class Player extends Entity{
 			spriteCounter=0;
 		}
 	}
+	
 	public void draw(Graphics2D g2) {
-	//	g2.setColor(Color.white);
-	//  g2.fillRect(x,y,gp.tileSize,gp.tileSize);
 		BufferedImage image =null;
-		boolean unPressed = !((keyH.upPressed) || (keyH.downPressed)||(keyH.leftPressed)||(keyH.rightPressed));
+		boolean unPressed = (keyH.getDirection()==-1);
 		switch(direction) {
 			case "up":
 				if(unPressed) {
 					image=up;
 				}
 				else {
-					switch(spriteNum) {
-					case 1:
-						image=upL;
-						break;
-					case 2:
-						image=upR;
-						break;
-					}
+					image = (spriteNum==1)?upL:upR;
 				}
 				break;
 			case "down":
@@ -122,14 +117,7 @@ public class Player extends Entity{
 					image=down;
 				}
 				else {
-					switch(spriteNum) {
-					case 1:
-						image=downL;
-						break;
-					case 2:
-						image=downR;
-						break;
-					}
+					image = (spriteNum==1)?downL:downR;
 				}
 				break;
 			case "left":
@@ -137,14 +125,7 @@ public class Player extends Entity{
 					image=left;
 				}
 				else {
-					switch(spriteNum) {
-					case 1:
-						image=leftL;
-						break;
-					case 2:
-						image=leftR;
-						break;
-					}
+					image = (spriteNum==1)?leftL:leftR;
 				}
 				break;
 			case "right":
@@ -152,17 +133,10 @@ public class Player extends Entity{
 					image=right;
 				}
 				else {
-					switch(spriteNum) {
-					case 1:
-						image=rightL;
-						break;
-					case 2:
-						image=rightR;
-						break;
-					}
+					image = (spriteNum==1)?rightL:rightR;
 				}
 				break;
 		}
-		g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
+		g2.drawImage(image,(playerX),(playerY),gp.tileSize,gp.tileSize,null);
 	}
 }

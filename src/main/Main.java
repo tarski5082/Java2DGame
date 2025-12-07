@@ -1,6 +1,6 @@
 package main;
 import javax.swing.JFrame;
-
+import java.util.Arrays;
 public class Main {
 
 	public static void main(String[]args) {
@@ -16,5 +16,6 @@ public class Main {
 		window.setLocationRelativeTo(null);
 		
 		gamePanel.startGameThread();
+		System.out.println(Arrays.toString(gamePanel.tileM.mapTileNum));
 	}
 }
