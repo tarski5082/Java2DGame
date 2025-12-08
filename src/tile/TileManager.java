@@ -18,7 +18,9 @@ public class TileManager {
 	public TileManager(GamePanel gp) {
 		this.gp=gp;
 		tile = new Tile[3];
-		mapTileNum =new int[gp.maxWorldRow][gp.maxScreenCol];
+		mapTileNum =new int[gp.maxWorldRow][gp.maxWorldCol];
+		getTileImage();
+		loadMap();
 	
 	}
 	
@@ -63,14 +65,22 @@ public class TileManager {
 		}
 	}
 	public void draw(Graphics2D g2) {
-		getTileImage();
-		loadMap();
-		for(int i=0;i<gp.maxScreenRow;i++) {
-			for(int j=0;j<gp.maxScreenCol;j++) {
+		int colMin=((gp.player.worldX)/gp.tileSize)-(gp.maxScreenCol/2)-1;
+		colMin=Math.max(colMin,0);
+		int colMax=((gp.player.worldX)/gp.tileSize)+(gp.maxScreenCol/2)+1;
+		colMax=Math.min(colMax,gp.maxScreenCol);
+		int rowMin=((gp.player.worldY)/gp.tileSize)-(gp.maxScreenRow/2)-1;
+		rowMin=Math.max(rowMin,0);
+		int rowMax=((gp.player.worldY)/gp.tileSize)+(gp.maxScreenRow/2)+1;
+		rowMax = Math.min(gp.maxWorldRow, rowMax);
+		for(int i=rowMin;i<rowMax;i++) {
+			for(int j=colMin;j<colMax;j++) {
 				int x = j*gp.tileSize;
 				int y = i*gp.tileSize;
+				int screenX=x-gp.player.worldX + gp.player.screenX;
+				int screenY=y-gp.player.worldY + gp.player.screenY;;
 				int t = mapTileNum[i][j];
-				g2.drawImage(tile[t].image,x,y,gp.tileSize,gp.tileSize,null);
+				g2.drawImage(tile[t].image,screenX,screenY,gp.tileSize,gp.tileSize,null);
 			}
 		}
 				

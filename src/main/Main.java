@@ -16,6 +16,6 @@ public class Main {
 		window.setLocationRelativeTo(null);
 		
 		gamePanel.startGameThread();
-		System.out.println(Arrays.toString(gamePanel.tileM.mapTileNum));
+		
 	}
 }

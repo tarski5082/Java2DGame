@@ -9,8 +9,8 @@ import Entity.Player;
 import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable{
 	//SCREEN SETTINGS
-	final int originalTitleSize=24;
-	final int scale = 2;
+	final int originalTitleSize=16;
+	final int scale = 1;
 	
 	public final int tileSize = originalTitleSize*scale;
 	public final int maxScreenCol = 16;
@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenHeight = tileSize * maxScreenRow;
 	
 	//WORLD SETTINGS
-	public final int maxWorldCol=17;
-	public final int maxWorldRow=15;
+	public final int maxWorldCol=50;
+	public final int maxWorldRow=50;
 	public final int worldWidth=maxWorldCol*tileSize;
 	public final int worldHeight=maxWorldRow*tileSize;
 	
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	
 	public GamePanel() {
-		this.setPreferredSize(new Dimension(worldWidth,worldHeight));
+		this.setPreferredSize(new Dimension(maxScreenCol*tileSize,maxScreenRow*tileSize));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
@@ -78,7 +78,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		tileM.getTileImage();
+		
 		tileM.draw(g2);
 		player.draw(g2);
 		g2.dispose();
