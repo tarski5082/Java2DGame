@@ -68,7 +68,7 @@ public class TileManager {
 		int colMin=((gp.player.worldX)/gp.tileSize)-(gp.maxScreenCol/2)-1;
 		colMin=Math.max(colMin,0);
 		int colMax=((gp.player.worldX)/gp.tileSize)+(gp.maxScreenCol/2)+1;
-		colMax=Math.min(colMax,gp.maxScreenCol);
+		colMax=Math.min(colMax,gp.maxWorldCol);
 		int rowMin=((gp.player.worldY)/gp.tileSize)-(gp.maxScreenRow/2)-1;
 		rowMin=Math.max(rowMin,0);
 		int rowMax=((gp.player.worldY)/gp.tileSize)+(gp.maxScreenRow/2)+1;
